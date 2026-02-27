@@ -1,5 +1,9 @@
 package com.oleksdr.services;
 
+import com.oleksdr.dto.Currency;
+
+import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -24,13 +28,7 @@ public class InputService {
                 }
                 return numberOfGames;
             }catch (IllegalArgumentException | InputMismatchException e){
-                if(e instanceof InputMismatchException){
-                    System.out.println("Error: Incorrect input please try again");
-                    sc.next();  // clean buffer
-                }
-                else{
-                    System.out.printf("Error: %s%n",e.getMessage());
-                }
+                printException(e);
             }
         }
     }
@@ -42,8 +40,8 @@ public class InputService {
                     throw new IllegalArgumentException("Player name cannot be empty");
                 }
                 return playerName;
-            } catch (IllegalArgumentException e) {
-                System.out.printf("Error: %s%n", e.getMessage());
+            } catch (IllegalArgumentException | InputMismatchException e) {
+                printException(e);
             }
         }
     }
@@ -60,9 +58,67 @@ public class InputService {
                     throw new IllegalArgumentException("Illegal answer ");
                 }
                 return ans;
-            } catch (IllegalArgumentException e) {
-                System.out.printf("Error: %s%n", e.getMessage());
+            } catch (IllegalArgumentException | InputMismatchException e) {
+                printException(e);
             }
         }
+    }
+
+    public BigInteger getInputMoneyAmount() {
+        while (true){
+            try{
+                BigInteger amount = sc.nextBigInteger();
+                if(amount.signum() <= 0){
+                    throw new IllegalArgumentException("You cannot put amount less than zero");
+                }
+                return amount;
+            }catch (IllegalArgumentException | InputMismatchException e){
+                printException(e);
+            }
+        }
+    }
+
+    public BigInteger getInputBid(BigInteger maxBalance) {
+        while (true){
+            try{
+                BigInteger amount = sc.nextBigInteger();
+                if(amount.signum() <= 0){
+                    throw new IllegalArgumentException("You cannot put amount less than zero");
+                }
+                if(amount.compareTo(maxBalance) > 0){
+                    throw new IllegalArgumentException("You don`t have enough money");
+                }
+                return amount;
+            }catch (IllegalArgumentException | InputMismatchException e){
+                printException(e);
+            }
+        }
+    }
+
+    public Currency getInputCurrency() {
+        while (true){
+            try{
+                System.out.printf("Currency list:%n%s:", Arrays.toString(Currency.values()));
+                String currencyToPick = sc.next();
+                for (Currency value : Currency.values()) {
+                    if(value.toString().equalsIgnoreCase(currencyToPick)){
+                        return value;
+                    }
+                }
+                throw new IllegalArgumentException("No currency with name " + currencyToPick);
+            }catch (IllegalArgumentException | InputMismatchException e){
+                printException(e);
+            }
+        }
+    }
+    private void printException(Exception e){
+        if(e instanceof InputMismatchException){
+            System.out.println("Error: Incorrect input please try again");
+            sc.next();
+        }
+        else{
+            System.out.printf("Error: %s%n",e.getMessage());
+        }
+        System.out.print("Try again: ");
     }
 }
