@@ -1,0 +1,110 @@
+@startuml
+class com.oleksdr.dto.Balance {
+- BigInteger moneyAmount
+- Currency currency
++ void subtractMoney(BigInteger)
++ void addMoney(BigInteger)
+}
+
+
+enum com.oleksdr.dto.GameResult {
++  PLAYER
++  COMPUTER
++  LOSE
++  DRAW
+- String result
++ String toString()
+}
+
+
+class com.oleksdr.entities.Player {
+- String name
+- List<Card> playerHand
+- Balance balance
+- int numberOfGames
+- int numberOfWins
++ void clearPlayerHand()
++ void incrementNumberOfGames()
++ void incrementNumberOfWins()
++ String toString()
+}
+
+
+class com.oleksdr.dto.Card {
+- Suit suit
+- Rank rank
++ String toString()
+}
+
+
+class com.oleksdr.services.DeckService {
+- Stack<Card> mainDeck
++ void generateDeck()
+}
+
+
+class com.oleksdr.Main {
+~ {static} InputService inputService
++ {static} void main(String[])
+- {static} void startGame(int,String,BigInteger,Currency)
+- {static} void proceedGame(Player,GameService,DeckService)
+- {static} void getGameResult(GameService,DeckService,Player,BigInteger)
+}
+
+
+enum com.oleksdr.dto.Rank {
++  TWO
++  THREE
++  FOUR
++  FIVE
++  SIX
++  SEVEN
++  EIGHT
++  NINE
++  TEN
++  JACK
++  QUEEN
++  KING
++  ACE
+- String name
+- int cost
+}
+
+class com.oleksdr.services.InputService {
+- Scanner sc
++ int getInputGames()
++ String getInputName()
++ String getAnswer()
++ BigInteger getInputMoneyAmount()
++ BigInteger getInputBid(BigInteger)
++ Currency getInputCurrency()
+- void printException(Exception)
+}
+
+
+enum com.oleksdr.dto.Currency {
++  USD
++  EUR
++  UAH
++  GBP
++  BAH
++  POINT
+- int point
+}
+
+enum com.oleksdr.dto.Suit {
++  HEARTS
++  DIAMONDS
++  CLUBS
++  SPADES
+- String suit
+}
+
+class com.oleksdr.services.GameService {
++ int countScore(List<Card>)
+- boolean isBlackJack(int)
++ List<Card> generateComputerDeck(Stack<Card>)
++ GameResult getGameResult(int,int)
+}
+
+@enduml

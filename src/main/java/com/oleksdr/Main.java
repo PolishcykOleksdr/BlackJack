@@ -16,10 +16,10 @@ import java.util.List;
  * date: 27.02.2026
  */
 public class Main {
-    static InputService inputService = new InputService();
+    private static final InputService inputService = new InputService();
 
     public static void main(String[] args) {
-        System.out.println("Black Jack v 0.1\nHello user!");
+        System.out.println("Black Jack v 0.2\nHello user!");
 
         System.out.print("Please write number of games you want to play: ");
         int numberOfGames = inputService.getInputGames();
@@ -48,7 +48,7 @@ public class Main {
             Currency currency
     ) {
         Player player = new Player(playerName, amount, currency);
-        while (player.getNumberOfGames() < numberOfGames) {
+        while (player.getNumberOfGames() <= numberOfGames) {
             player.incrementNumberOfGames();
             System.out.println("-------------------------->>>>>>>>");
             System.out.printf("Game: %d%n", player.getNumberOfGames());

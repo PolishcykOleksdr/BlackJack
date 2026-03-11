@@ -16,7 +16,7 @@ public class GameService {
     public int countScore(List<Card> deck){
         int score = 0;
         for(Card card : deck){
-            score += card.getRank().getCost();
+            score += card.rank().getCost();
         }
 
         if(deck.size() == 2 && isBlackJack(score)){

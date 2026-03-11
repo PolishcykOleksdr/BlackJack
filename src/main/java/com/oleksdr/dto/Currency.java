@@ -2,8 +2,6 @@ package com.oleksdr.dto;
 
 import lombok.Getter;
 
-import java.util.Arrays;
-
 /**
  * author: user,
  * date: 27.02.2026
