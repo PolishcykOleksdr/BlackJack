@@ -1,11 +1,11 @@
 package com.oleksdr.services;
 
-import com.oleksdr.dto.Currency;
-
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
+import com.oleksdr.dto.Currency;
 
 /**
  * author: user,
@@ -112,12 +112,16 @@ public class InputService {
         }
     }
     private void printException(Exception e){
+        if (e == null) {
+            return;
+        }
+
         if(e instanceof InputMismatchException){
             System.out.println("Error: Incorrect input please try again");
             sc.next();
         }
         else{
-            System.out.printf("Error: %s%n",e.getMessage());
+            System.out.printf("Error: %s%n", e.getMessage());
         }
         System.out.print("Try again: ");
     }

@@ -48,7 +48,7 @@ public class Main {
             Currency currency
     ) {
         Player player = new Player(playerName, amount, currency);
-        while (player.getNumberOfGames() <= numberOfGames) {
+        while (player.getNumberOfGames() < numberOfGames) {
             player.incrementNumberOfGames();
             System.out.println("-------------------------->>>>>>>>");
             System.out.printf("Game: %d%n", player.getNumberOfGames());
